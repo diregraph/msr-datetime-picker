@@ -1,0 +1,61 @@
+<link rel="import" href="../polymer/polymer-element.html">
+<link rel="import" href="./bower_components/datetime-picker/overlay-date-picker.html">
+<link rel="import" href="./bower_components/datetime-picker/overlay-time-picker.html">
+<link rel="import" href="../iron-icons/iron-icons.html">
+
+<dom-module id="mrs-datetime-picker">
+    <template>
+        <style>
+            :host {
+                display: block;
+            }
+        </style>
+        <div class="vertical-section-container">
+            <overlay-date-picker auto-confirm
+                                 date="{{date}}"
+                                 no-overlap
+            >
+            </overlay-date-picker>
+            <iron-icon icon="icons:event"></iron-icon>
+
+            <overlay-time-picker hour12={{hour12}}
+                                 time="{{time}}"
+                                 no-overlap
+                                 clamp
+            >
+            </overlay-time-picker>
+            <iron-icon icon="icons:schedule"></iron-icon>
+
+            <div>date: [[date]]</div>
+
+        </div>
+    </template>
+
+    <script>
+        /**
+         * `mrs-datetime-picker`
+         * A polymer element by incorporating datetime-picker webcomponent by fooloomanzoo
+         *
+         * @customElement
+         * @polymer
+         * @demo demo/index.html
+         */
+        class MrsDatetimePicker extends Polymer.Element {
+            static get is() {
+                return 'mrs-datetime-picker';
+            }
+
+            static get properties() {
+                return {
+                    //by default 24 hours
+                    //for 12 hour time add the property to mrs-datetime-picker
+                    hour12: {
+                        type: Boolean
+                    }
+                };
+            }
+        }
+
+        window.customElements.define(MrsDatetimePicker.is, MrsDatetimePicker);
+    </script>
+</dom-module>

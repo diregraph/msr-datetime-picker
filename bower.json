@@ -1,0 +1,18 @@
+{
+  "name": "mrs-datetime-picker",
+  "description": "A polymer element by incorporating datetime-picker webcomponent by fooloomanzoo",
+  "main": "mrs-datetime-picker.html",
+  "dependencies": {
+    "polymer": "Polymer/polymer#^2.0.0",
+    "datetime-picker": "fooloomanzoo/datetime-picker#^2.4.8",
+    "iron-icons": "PolymerElements/iron-icons#^2.0.1"
+  },
+  "devDependencies": {
+    "iron-demo-helpers": "PolymerElements/iron-demo-helpers#^2.0.0",
+    "web-component-tester": "Polymer/web-component-tester#^6.0.0",
+    "webcomponentsjs": "webcomponents/webcomponentsjs#^1.0.0"
+  },
+  "resolutions": {
+    "polymer": "^2.0.0"
+  }
+}
