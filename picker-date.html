@@ -1,0 +1,37 @@
+<link rel="import" href="../polymer/polymer-element.html">
+<link rel="import" href="../datetime-picker/date-picker.html">
+<link rel="import" href="../datetime-picker/datetime-shared-style.html">
+<link rel="import" href="../input-picker-pattern/overlay-picker-mixin.html">
+
+
+<dom-module id="picker-date">
+    <script>
+        /**
+         *  @customElement
+         *  @polymer
+         *
+         *  @extends DatePicker
+         **/
+        class PickerDate extends OverlayPickerMixin(DatePicker) {
+
+            static get is() {
+                return 'picker-date';
+            }
+
+            static get properties() {
+                return {
+                    localeForInput: {
+                        type: String
+                    }
+                }
+            }
+
+            static get replacementInputTemplate() {
+                return `
+              <date-input locale="[[localeForInput]]" hour12="[[hour12]]" clamp="[[clamp]]" datetime="{{confirmedDatetime}}" min="[[min]]" max="[[max]]"></date-input>
+            `;
+            }
+        }
+        window.customElements.define(PickerDate.is, PickerDate);
+    </script>
+</dom-module>

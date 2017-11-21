@@ -1,7 +1,9 @@
 <link rel="import" href="../polymer/polymer-element.html">
-<link rel="import" href="./bower_components/datetime-picker/overlay-date-picker.html">
-<link rel="import" href="./bower_components/datetime-picker/overlay-time-picker.html">
+<link rel="import" href="../datetime-picker/overlay-date-picker.html">
+<link rel="import" href="./mu-picker.html">
+<link rel="import" href="./picker-date.html">
 <link rel="import" href="../iron-icons/iron-icons.html">
+
 
 <dom-module id="mrs-datetime-picker">
     <template>
@@ -10,23 +12,42 @@
                 display: block;
             }
         </style>
+        <custom-style>
+            <style is="custom-style">
+                picker-date.greenTheme {
+                    --datetime-selected-background: #1cccac;
+                    --datetime-selected-color: #fff;
+                    --datetime-background: #448b7e;
+                    --datetime-color: #fff;
+                }
+                mu-picker.greenTheme {
+                    --datetime-selected-background: #1cccac;
+                    --datetime-selected-color: #fff;
+                    --datetime-background: #448b7e;
+                    --datetime-color: #fff;
+                }
+            </style>
+        </custom-style>
         <div class="vertical-section-container">
-            <overlay-date-picker auto-confirm
-                                 date="{{date}}"
-                                 no-overlap
+            <picker-date class$="[[theme]]"
+                         auto-confirm
+                         date="{{date}}"
+                         no-overlap
+                         locale-for-input=[[localeForDateInput]]
+
             >
-            </overlay-date-picker>
+            </picker-date>
             <iron-icon icon="icons:event"></iron-icon>
 
-            <overlay-time-picker hour12={{hour12}}
-                                 time="{{time}}"
-                                 no-overlap
-                                 clamp
-            >
-            </overlay-time-picker>
+            <mu-picker class$="[[theme]]"
+                       no-overlap
+                       time="{{time}}"
+                       microseconds="{{microseconds}}"
+            ></mu-picker>
             <iron-icon icon="icons:schedule"></iron-icon>
-
-            <div>date: [[date]]</div>
+            <!--need to add a leading zero to microseconds when it is less than 100-->
+            <!--<div>date: [[date]]</div>
+            <div>time: [[time]][[microseconds]]</div>-->
 
         </div>
     </template>
@@ -40,6 +61,12 @@
          * @polymer
          * @demo demo/index.html
          */
+
+        /**
+         * value="en">MM/DD/YYYY</option>
+         * value="fr">DD/MM/YYYY</option>
+         * value="ja">YYYY/MM/DD</option>
+         */
         class MrsDatetimePicker extends Polymer.Element {
             static get is() {
                 return 'mrs-datetime-picker';
@@ -47,12 +74,51 @@
 
             static get properties() {
                 return {
-                    //by default 24 hours
-                    //for 12 hour time add the property to mrs-datetime-picker
-                    hour12: {
-                        type: Boolean
+                    localeForDateInput: {
+                        type: String,
+                        value: 'en'
+                    },
+                    theme: {
+                        type: String,
+                        value: ''
+                    },
+                    date: {
+                        type: String,
+                        notify: true
+                    },
+                    time: {
+                        type: String,
+                        notify: true
+                    },
+                    microseconds: {
+                        type: String
+                    },
+                    timeWithMicroseconds: {
+                        type: String,
+                        notify: true
                     }
-                };
+                }
+            }
+
+            static get observers() {
+                return [
+                    '_updateTime(time, microseconds)'
+                ]
+            }
+
+            _updateTime(time, microseconds) {
+                let intMu = parseInt(microseconds);
+                let strMu;
+                if(intMu < 100){
+                    if(intMu < 10){
+                        strMu = '00'+ intMu.toString();
+                    }else{
+                        strMu = '0'+ intMu.toString();
+                    }
+                }else{
+                    strMu = intMu.toString();
+                }
+                this.timeWithMicroseconds = time+' '+strMu;
             }
         }
 
