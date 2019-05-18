@@ -1,0 +1,184 @@
+<link rel="import" href="../polymer/polymer-element.html">
+<link rel="import" href="../datetime-picker/overlay-date-picker.html">
+<link rel="import" href="../datetime-picker/date-input.html">
+<link rel="import" href="../iron-icons/iron-icons.html">
+
+<link rel="import" href="./calendar-button.html">
+<link rel="import" href="./time-button.html">
+
+<dom-module id="mrs-datetime-picker">
+    <template>
+        <style>
+            :host {
+                display: block;
+            }
+        </style>
+
+        <custom-style>
+            <style is="custom-style">
+               .lightTheme {
+                   --datetime-selected-background: #9E9E9E;
+                   --datetime-selected-color: #000000;
+                   --datetime-background: #E0E0E0;
+                   --datetime-color: #000000;
+               }
+               .darkTheme {
+                   --datetime-selected-background: #616161;
+                   --datetime-selected-color: #fff;
+                   --datetime-background: #424242;
+                   --datetime-color: #fff;
+               }
+            </style>
+        </custom-style>
+
+        <div class="vertical-section-container">
+            <calendar-button class$="[[theme]]"
+                             date="{{date}}"
+                             no-overlap
+                             auto-confirm
+            ></calendar-button>
+            <date-input locale="[[localeForDateInput]]"
+                        date="{{date}}"
+            >
+            </date-input>
+
+            <time-button class$="[[theme]]"
+                         no-overlap
+                         time="{{time}}"
+                         clamp=""
+            >
+            </time-button>
+            <time-input time="{{time}}"
+                        clamp=""
+            >
+            </time-input>
+        </div>
+    </template>
+
+    <script>
+        /**
+         * `mrs-datetime-picker`
+         * A polymer element by incorporating datetime-picker webcomponent by fooloomanzoo
+         *
+         * @customElement
+         * @polymer
+         * @demo demo/index.html
+         */
+
+        class MrsDatetimePicker extends Polymer.Element {
+            static get is() {
+                return 'mrs-datetime-picker';
+            }
+
+            static get properties() {
+                return {
+                    /**
+                     * property to set date format
+                     * en => MM/DD/YYYY
+                     * fr => DD/MM/YYYY
+                     * ja => YYYY/MM/DD
+                     */
+                    localeForDateInput: {
+                        type: String,
+                        value: 'en'
+                    },
+                    /**
+                     * property to set theme
+                     * this can also be used to set custom colours
+                     * custom-style should be changed accordingly for custom themes
+                     * "" => Default given by datetime-picker
+                     * greenTheme => Green
+                     */
+                    theme: {
+                        type: String,
+                        value: ''
+                    },
+                    /**
+                     * the selected date
+                     */
+                    date: {
+                        type: String,
+                        notify: true
+                    },
+                    /**
+                     * the selected time without microseconds
+                     */
+                    time: {
+                        type: String,
+                        notify: true
+                    }
+                }
+            }
+        }
+        window.customElements.define(MrsDatetimePicker.is, MrsDatetimePicker);
+    </script>
+</dom-module>
+
+
+
+
+
+<!--<picker-date class$="[[theme]]"
+                         date="{{date}}"
+                         no-overlap
+                         locale-for-input=[[localeForDateInput]]
+
+            >
+            </picker-date>-->
+
+
+<!--
+/**
+* when gett
+*/
+_updateTime(time, microseconds) {
+let intMu = parseInt(microseconds);
+let strMu;
+if(intMu < 100){
+if(intMu < 10){
+strMu = '00'+ intMu.toString();
+}else{
+strMu = '0'+ intMu.toString();
+}
+}else{
+strMu = intMu.toString();
+}
+this.timeWithMicroseconds = time+' '+strMu;
+}-->
+
+
+<!--
+static get observers() {
+return [
+'_updateTime(time, microseconds)'
+]
+}-->
+
+
+<!--
+/**
+* the selected microsecond value
+* to bind this property to somewhere when using add notify:true
+*/
+microseconds: {
+type: String
+},
+/**
+* the selected time with microseconds
+*/
+timeWithMicroseconds: {
+type: String,
+notify: true
+}-->
+
+
+
+<!--<mu-picker class$="[[theme]]"
+                       no-overlap
+                       time="{{time}}"
+                       microseconds="{{microseconds}}"
+            ></mu-picker>-->
+
+<!--
+<link rel="import" href="./mu-picker.html">
+<link rel="import" href="./picker-date.html">-->

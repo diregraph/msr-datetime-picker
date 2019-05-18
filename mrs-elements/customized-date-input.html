@@ -1,0 +1,41 @@
+<link rel="import" href="../../polymer/polymer-element.html">
+<link rel="import" href="../../datetime-picker/date-input.html">
+<link rel="import" href="../../datetime-picker/datetime-shared-style.html">
+
+
+<dom-module id="localizable-date-input">
+    <script>
+        /**
+         *  @customElement
+         *  @polymer
+         *
+         *  @extends DatePicker
+         **/
+        class LocalizableDateInput extends DateInput {
+            static get is() {
+                return 'localizable-date-input';
+            }   
+
+            static get properties() {
+                return {
+                    localeForInput: {
+                        type: String,
+                        value: 'en'
+                    }
+                }
+            }
+
+            static get inputTemplate() {
+                return `
+                    <number-input id="month" style="order:[[_orderDate.month]];" tabindex$="[[_orderDate.month]]" index$="[[_orderDate.month]]" hidden$="[[_hideMonth]]" pad-length="2" min="1" max="12" disabled="[[disabled]]" value="{{month}}"></number-input>
+                    <span style="order:[[_orderDate.separatorYearMonth]];"  hidden$="[[_hideMonth]]">[[_localDateSeparator]]</span>
+                    <number-input id="day" style="order:[[_orderDate.day]];" tabindex$="[[_orderDate.day]]" index$="[[_orderDate.day]]" hidden$="[[_hideDay]]" pad-length="2" min="1" max="[[_maxDayOfMonth]]" disabled="[[disabled]]" value="{{day}}"></number-input>
+                    <span style="order:[[_orderDate.separatorMonthDay]];" hidden$="[[_hideDay]]">[[_localDateSeparator]]</span>
+                    <number-input id="year" style="order:[[_orderDate.year]];" tabindex$="[[_orderDate.year]]" index$="[[_orderDate.year]]" pad-length="4" disabled="[[disabled]]" value="{{year}}"></number-input>
+                `;
+            }
+        }
+
+        window.customElements.define(LocalizableDateInput.is, LocalizableDateInput);
+    </script>
+</dom-module>

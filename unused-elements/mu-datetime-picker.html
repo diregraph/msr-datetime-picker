@@ -1,0 +1,62 @@
+<link rel="import" href="../../polymer/polymer-element.html">
+<link rel="import" href="../../datetime-picker/datetime-picker.html">
+<link rel="import" href="../../datetime-picker/datetime-shared-style.html">
+<link rel="import" href="../../input-picker-pattern/overlay-picker-mixin.html">
+
+
+<dom-module id="mu-datetime-picker">
+    <script>
+        /**
+         *  @customElement
+         *  @polymer
+         *
+         *  @extends DatePicker
+         **/
+        class MuDatetimePicker extends OverlayPickerMixin(DatetimePicker) {
+
+            static get is() {
+                return 'mu-datetime-picker';
+            }
+
+            static get properties() {
+                return {
+                    /**
+                     * property to set date format
+                     * en => MM/DD/YYYY
+                     * fr => DD/MM/YYYY
+                     * ja => YYYY/MM/DD
+                     */
+                    localeForDateInput: {
+                        type: String,
+                        value: 'en'
+                    },
+                    clamp: {
+                        type: String,
+                        value: ''
+                    }
+                }
+            }
+
+            _onDblClickDay(e) {
+                super.renderCalendar(this.year, this.month, this.day, this.date);
+                setTimeout(() => {
+                    this.confirm();
+                }, 0);
+            }
+
+            static get _buttonTemplate() {
+                return `
+                    <svg class="icon button now" viewBox="0 0 24 24" on-click="now"><g><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></g></svg>
+                `;
+            }
+
+            static get replacementInputTemplate() {
+                return `
+              <datetime-input class="replacement" locale="[[localeForInput]]" hour12="[[hour12]]" clamp="[[clamp]]" datetime="{{confirmedDatetime}}" min="[[min]]" max="[[max]]"></datetime-input>
+            `;
+            }
+        }
+
+        window.customElements.define(MuDatetimePicker.is, MuDatetimePicker);
+    </script>
+</dom-module>
