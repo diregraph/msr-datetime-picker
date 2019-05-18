@@ -10,10 +10,22 @@
 
     <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
     <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
-    <link rel="import" href="../mrs-datetime-picker.html">
+    <link rel="import" href="../mrs-elements/mrs-datetime-picker.html">
 
     <custom-style>
         <style is="custom-style" include="demo-pages-shared-styles">
+            mu-datetime-picker.lightTheme {
+                --datetime-selected-background: #9E9E9E;
+                --datetime-selected-color: #000000;
+                --datetime-background: #E0E0E0;
+                --datetime-color: #000000;
+            }
+            mu-datetime-picker.darkTheme {
+                --datetime-selected-background: #616161;
+                --datetime-selected-color: #fff;
+                --datetime-background: #424242;
+                --datetime-color: #fff;
+            }
         </style>
     </custom-style>
 </head>
@@ -31,20 +43,22 @@
                                          time-with-microseconds="{{timeWMu}}"
                     >
                     </mrs-datetime-picker>
+                    <b>Date Format</b>
                     <select value="{{dateFormat::change}}">
-                        <option value>Select Date Format</option>
                         <option value="en">MM/DD/YYYY</option>
                         <option value="fr">DD/MM/YYYY</option>
                         <option value="ja">YYYY/MM/DD</option>
                     </select>
+                    <br>
+                    <b>Theme</b>
                     <select value="{{theme::change}}">
-                        <option value>Select Theme</option>
                         <option value="">Default</option>
-                        <option value="greenTheme">Green</option>
+                        <option value="lightTheme">Light</option>
+                        <option value="darkTheme">Dark</option>
                     </select>
                     <div>Date: [[date]]</div>
                     <div>Time: [[time]]</div>
-                    <div>Time With Mu: [[timeWMu]]</div>
+                    <div>Time: [[timeWMu]]</div>
 
                 </template>
             </dom-bind>

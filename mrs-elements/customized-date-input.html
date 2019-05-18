@@ -1,30 +1,24 @@
 <link rel="import" href="../../polymer/polymer-element.html">
 <link rel="import" href="../../datetime-picker/date-input.html">
-<link rel="import" href="../../datetime-picker/datetime-shared-style.html">
 
-
-<dom-module id="localizable-date-input">
+<dom-module id="customized-date-input">
     <script>
         /**
          *  @customElement
          *  @polymer
          *
-         *  @extends DatePicker
+         *  @extends DateInput
          **/
-        class LocalizableDateInput extends DateInput {
+        class CustomizedDateInput extends DateInput {
             static get is() {
-                return 'localizable-date-input';
-            }   
-
-            static get properties() {
-                return {
-                    localeForInput: {
-                        type: String,
-                        value: 'en'
-                    }
-                }
+                return 'customized-date-input';
             }
 
+            /**
+             *  overridden method
+             *  this overrides the default date-input template
+             *  the order of selected element when the tab button is pressed is set here 'tabindex$="[[_orderDate.month]]"'
+             **/
             static get inputTemplate() {
                 return `
                     <number-input id="month" style="order:[[_orderDate.month]];" tabindex$="[[_orderDate.month]]" index$="[[_orderDate.month]]" hidden$="[[_hideMonth]]" pad-length="2" min="1" max="12" disabled="[[disabled]]" value="{{month}}"></number-input>
@@ -36,6 +30,6 @@
             }
         }
 
-        window.customElements.define(LocalizableDateInput.is, LocalizableDateInput);
+        window.customElements.define(CustomizedDateInput.is, CustomizedDateInput);
     </script>
 </dom-module>

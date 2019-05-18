@@ -1,10 +1,9 @@
-<link rel="import" href="../polymer/polymer-element.html">
-<link rel="import" href="../datetime-picker/overlay-date-picker.html">
-<link rel="import" href="../datetime-picker/date-input.html">
-<link rel="import" href="../iron-icons/iron-icons.html">
+<link rel="import" href="../../polymer/polymer-element.html">
 
-<link rel="import" href="./calendar-button.html">
-<link rel="import" href="./time-button.html">
+<link rel="import" href="calendar-button.html">
+<link rel="import" href="time-button.html">
+<link rel="import" href="customized-date-input.html">
+<link rel="import" href="mu-time-input.html">
 
 <dom-module id="mrs-datetime-picker">
     <template>
@@ -37,21 +36,22 @@
                              no-overlap
                              auto-confirm
             ></calendar-button>
-            <date-input locale="[[localeForDateInput]]"
-                        date="{{date}}"
+            <customized-date-input locale="[[localeForDateInput]]"
+                                   date="{{date}}"
             >
-            </date-input>
+            </customized-date-input>
 
             <time-button class$="[[theme]]"
                          no-overlap
-                         time="{{time}}"
+                         auto-confirm
+                         time-with-microseconds="{{timeWithMicroseconds}}"
                          clamp=""
             >
             </time-button>
-            <time-input time="{{time}}"
-                        clamp=""
+            <mu-time-input time-with-microseconds="{{timeWithMicroseconds}}"
+                           time="{{time}}"
             >
-            </time-input>
+            </mu-time-input>
         </div>
     </template>
 
@@ -106,6 +106,13 @@
                     time: {
                         type: String,
                         notify: true
+                    },
+                    /**
+                     * the selected time with microseconds
+                     */
+                    timeWithMicroseconds: {
+                        type: String,
+                        notify: true
                     }
                 }
             }
@@ -131,45 +138,7 @@
 /**
 * when gett
 */
-_updateTime(time, microseconds) {
-let intMu = parseInt(microseconds);
-let strMu;
-if(intMu < 100){
-if(intMu < 10){
-strMu = '00'+ intMu.toString();
-}else{
-strMu = '0'+ intMu.toString();
-}
-}else{
-strMu = intMu.toString();
-}
-this.timeWithMicroseconds = time+' '+strMu;
-}-->
-
-
-<!--
-static get observers() {
-return [
-'_updateTime(time, microseconds)'
-]
-}-->
-
-
-<!--
-/**
-* the selected microsecond value
-* to bind this property to somewhere when using add notify:true
-*/
-microseconds: {
-type: String
-},
-/**
-* the selected time with microseconds
-*/
-timeWithMicroseconds: {
-type: String,
-notify: true
-}-->
+-->
 
 
 
